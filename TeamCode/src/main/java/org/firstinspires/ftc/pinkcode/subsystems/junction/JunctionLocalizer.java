@@ -14,6 +14,7 @@ public class JunctionLocalizer {
 
     public static Junction locateJunction(Pose2d robotLocation) {
         int columnIndex = Math.round((float) robotLocation.getY() / 23) - 1;
+
         JunctionColumn column = junctions.get(columnIndex);
 
         // Sorts the junctions by distance from greatest to smallest.

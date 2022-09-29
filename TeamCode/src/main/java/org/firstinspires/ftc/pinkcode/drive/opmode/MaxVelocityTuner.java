@@ -10,8 +10,10 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.pinkcode.drive.DriveConstants;
-import org.firstinspires.ftc.pinkcode.drive.SampleMecanumDrive;
+import org.firstinspires.ftc.pinkcode.subsystems.Hardware;
+import org.firstinspires.ftc.pinkcode.subsystems.roadrunner.MecanumBase;
+import org.firstinspires.ftc.pinkcode.subsystems.roadrunner.RobotConfig;
+import org.firstinspires.ftc.pinkcode.subsystems.roadrunner.TrackingWheelLocalizer;
 
 import java.util.Objects;
 
@@ -35,7 +37,7 @@ public class MaxVelocityTuner extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
+        MecanumBase drive = new MecanumBase(hardwareMap, new Hardware(hardwareMap));
 
         drive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
@@ -67,7 +69,7 @@ public class MaxVelocityTuner extends LinearOpMode {
 
         drive.setDrivePower(new Pose2d());
 
-        double effectiveKf = DriveConstants.getMotorVelocityF(veloInchesToTicks(maxVelocity));
+        double effectiveKf = TrackingWheelLocalizer.getMotorVelocityF(veloInchesToTicks(maxVelocity));
 
         telemetry.addData("Max Velocity", maxVelocity);
         telemetry.addData("Voltage Compensated kF", effectiveKf * batteryVoltageSensor.getVoltage() / 12);
@@ -77,6 +79,6 @@ public class MaxVelocityTuner extends LinearOpMode {
     }
 
     private double veloInchesToTicks(double inchesPerSec) {
-        return inchesPerSec / (2 * Math.PI * DriveConstants.WHEEL_RADIUS) / DriveConstants.GEAR_RATIO * DriveConstants.TICKS_PER_REV;
+        return inchesPerSec / (2 * Math.PI * RobotConfig.WHEEL_RADIUS) / RobotConfig.GEAR_RATIO * RobotConfig.TICKS_PER_REV;
     }
 }

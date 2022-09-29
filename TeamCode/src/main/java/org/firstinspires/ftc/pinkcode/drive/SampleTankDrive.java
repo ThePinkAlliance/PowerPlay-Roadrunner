@@ -26,6 +26,7 @@ import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType;
 
+import org.firstinspires.ftc.pinkcode.subsystems.roadrunner.RobotConfig;
 import org.firstinspires.ftc.pinkcode.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.pinkcode.trajectorysequence.TrajectorySequenceBuilder;
 import org.firstinspires.ftc.pinkcode.trajectorysequence.TrajectorySequenceRunner;
@@ -34,17 +35,14 @@ import org.firstinspires.ftc.pinkcode.util.LynxModuleUtil;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.firstinspires.ftc.pinkcode.drive.DriveConstants.MAX_ACCEL;
-import static org.firstinspires.ftc.pinkcode.drive.DriveConstants.MAX_ANG_ACCEL;
-import static org.firstinspires.ftc.pinkcode.drive.DriveConstants.MAX_ANG_VEL;
-import static org.firstinspires.ftc.pinkcode.drive.DriveConstants.MAX_VEL;
-import static org.firstinspires.ftc.pinkcode.drive.DriveConstants.MOTOR_VELO_PID;
-import static org.firstinspires.ftc.pinkcode.drive.DriveConstants.RUN_USING_ENCODER;
-import static org.firstinspires.ftc.pinkcode.drive.DriveConstants.TRACK_WIDTH;
-import static org.firstinspires.ftc.pinkcode.drive.DriveConstants.encoderTicksToInches;
-import static org.firstinspires.ftc.pinkcode.drive.DriveConstants.kA;
-import static org.firstinspires.ftc.pinkcode.drive.DriveConstants.kStatic;
-import static org.firstinspires.ftc.pinkcode.drive.DriveConstants.kV;
+import static org.firstinspires.ftc.pinkcode.subsystems.roadrunner.RobotConfig.MAX_ACCEL;
+import static org.firstinspires.ftc.pinkcode.subsystems.roadrunner.RobotConfig.MAX_ANG_ACCEL;
+import static org.firstinspires.ftc.pinkcode.subsystems.roadrunner.RobotConfig.MAX_ANG_VEL;
+import static org.firstinspires.ftc.pinkcode.subsystems.roadrunner.RobotConfig.MAX_VEL;
+import static org.firstinspires.ftc.pinkcode.subsystems.roadrunner.RobotConfig.MOTOR_VELO_PID;
+import static org.firstinspires.ftc.pinkcode.subsystems.roadrunner.RobotConfig.RUN_USING_ENCODER;
+import static org.firstinspires.ftc.pinkcode.subsystems.roadrunner.RobotConfig.TRACK_WIDTH;
+import static org.firstinspires.ftc.pinkcode.subsystems.roadrunner.TrackingWheelLocalizer.encoderTicksToInches;
 
 /*
  * Simple tank drive hardware implementation for REV hardware.
@@ -71,7 +69,7 @@ public class SampleTankDrive extends TankDrive {
     private VoltageSensor batteryVoltageSensor;
 
     public SampleTankDrive(HardwareMap hardwareMap) {
-        super(kV, kA, kStatic, TRACK_WIDTH);
+        super(RobotConfig.kV, RobotConfig.kA, RobotConfig.kStatic, TRACK_WIDTH);
 
         follower = new TankPIDVAFollower(AXIAL_PID, CROSS_TRACK_PID,
                 new Pose2d(0.5, 0.5, Math.toRadians(5.0)), 0.5);

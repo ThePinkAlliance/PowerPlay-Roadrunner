@@ -13,15 +13,16 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.RobotLog;
 
-import org.firstinspires.ftc.pinkcode.drive.SampleMecanumDrive;
+import org.firstinspires.ftc.pinkcode.subsystems.Hardware;
+import org.firstinspires.ftc.pinkcode.subsystems.roadrunner.MecanumBase;
+import org.firstinspires.ftc.pinkcode.subsystems.roadrunner.RobotConfig;
 
 import java.util.List;
 
-import static org.firstinspires.ftc.pinkcode.drive.DriveConstants.MAX_ACCEL;
-import static org.firstinspires.ftc.pinkcode.drive.DriveConstants.MAX_VEL;
-import static org.firstinspires.ftc.pinkcode.drive.DriveConstants.MOTOR_VELO_PID;
-import static org.firstinspires.ftc.pinkcode.drive.DriveConstants.RUN_USING_ENCODER;
-import static org.firstinspires.ftc.pinkcode.drive.DriveConstants.kV;
+import static org.firstinspires.ftc.pinkcode.subsystems.roadrunner.RobotConfig.MAX_ACCEL;
+import static org.firstinspires.ftc.pinkcode.subsystems.roadrunner.RobotConfig.MAX_VEL;
+import static org.firstinspires.ftc.pinkcode.subsystems.roadrunner.RobotConfig.MOTOR_VELO_PID;
+import static org.firstinspires.ftc.pinkcode.subsystems.roadrunner.RobotConfig.RUN_USING_ENCODER;
 
 /*
  * This routine is designed to tune the PID coefficients used by the REV Expansion Hubs for closed-
@@ -72,7 +73,7 @@ public class DriveVelocityPIDTuner extends LinearOpMode {
 
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
 
-        SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
+        MecanumBase drive = new MecanumBase(hardwareMap, new Hardware(hardwareMap));
 
         Mode mode = Mode.TUNING_MODE;
 
@@ -119,7 +120,7 @@ public class DriveVelocityPIDTuner extends LinearOpMode {
                     }
 
                     MotionState motionState = activeProfile.get(profileTime);
-                    double targetPower = kV * motionState.getV();
+                    double targetPower = RobotConfig.kV * motionState.getV();
                     drive.setDrivePower(new Pose2d(targetPower, 0, 0));
 
                     List<Double> velocities = drive.getWheelVelocities();

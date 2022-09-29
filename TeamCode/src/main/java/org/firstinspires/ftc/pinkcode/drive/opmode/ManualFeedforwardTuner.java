@@ -1,5 +1,9 @@
 package org.firstinspires.ftc.pinkcode.drive.opmode;
 
+import static org.firstinspires.ftc.pinkcode.subsystems.roadrunner.RobotConfig.MAX_ACCEL;
+import static org.firstinspires.ftc.pinkcode.subsystems.roadrunner.RobotConfig.MAX_VEL;
+import static org.firstinspires.ftc.pinkcode.subsystems.roadrunner.RobotConfig.RUN_USING_ENCODER;
+
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
@@ -13,16 +17,11 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.RobotLog;
 
-import org.firstinspires.ftc.pinkcode.drive.SampleMecanumDrive;
+import org.firstinspires.ftc.pinkcode.subsystems.Hardware;
+import org.firstinspires.ftc.pinkcode.subsystems.roadrunner.MecanumBase;
+import org.firstinspires.ftc.pinkcode.subsystems.roadrunner.RobotConfig;
 
 import java.util.Objects;
-
-import static org.firstinspires.ftc.pinkcode.drive.DriveConstants.MAX_ACCEL;
-import static org.firstinspires.ftc.pinkcode.drive.DriveConstants.MAX_VEL;
-import static org.firstinspires.ftc.pinkcode.drive.DriveConstants.RUN_USING_ENCODER;
-import static org.firstinspires.ftc.pinkcode.drive.DriveConstants.kA;
-import static org.firstinspires.ftc.pinkcode.drive.DriveConstants.kStatic;
-import static org.firstinspires.ftc.pinkcode.drive.DriveConstants.kV;
 
 /*
  * This routine is designed to tune the open-loop feedforward coefficients. Although it may seem unnecessary,
@@ -46,7 +45,7 @@ public class ManualFeedforwardTuner extends LinearOpMode {
 
     private FtcDashboard dashboard = FtcDashboard.getInstance();
 
-    private SampleMecanumDrive drive;
+    private MecanumBase drive;
 
     enum Mode {
         DRIVER_MODE,
@@ -70,7 +69,7 @@ public class ManualFeedforwardTuner extends LinearOpMode {
 
         telemetry = new MultipleTelemetry(telemetry, dashboard.getTelemetry());
 
-        drive = new SampleMecanumDrive(hardwareMap);
+        drive = new MecanumBase(hardwareMap, new Hardware(hardwareMap));
 
         mode = Mode.TUNING_MODE;
 
@@ -109,7 +108,7 @@ public class ManualFeedforwardTuner extends LinearOpMode {
                     }
 
                     MotionState motionState = activeProfile.get(profileTime);
-                    double targetPower = Kinematics.calculateMotorFeedforward(motionState.getV(), motionState.getA(), kV, kA, kStatic);
+                    double targetPower = Kinematics.calculateMotorFeedforward(motionState.getV(), motionState.getA(), RobotConfig.kV, RobotConfig.kA, RobotConfig.kStatic);
 
                     drive.setDrivePower(new Pose2d(targetPower, 0, 0));
                     drive.updatePoseEstimate();

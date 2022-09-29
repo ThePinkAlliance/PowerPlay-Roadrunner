@@ -4,32 +4,33 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.pinkcode.util.Encoder;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 
 public class Hardware {
     public DcMotor testMotor;
     
-    public DcMotor frontLeft;
-    public DcMotor frontRight;
+    public DcMotorEx frontLeft;
+    public DcMotorEx frontRight;
 
-    public DcMotor backLeft;
-    public DcMotor backRight;
+    public DcMotorEx backLeft;
+    public DcMotorEx backRight;
 
-    public DcMotorEx leftEncoder;
-    public DcMotorEx rightEncoder;
-    public DcMotorEx centerEncoder;
+    public Encoder leftEncoder;
+    public Encoder rightEncoder;
+    public Encoder centerEncoder;
 
     public WebcamName webcamFront;
 
     public Hardware(HardwareMap map) {
-        frontLeft = map.dcMotor.get("fl");
-        frontRight = map.dcMotor.get("fr");
-        backRight = map.dcMotor.get("br");
-        backLeft = map.dcMotor.get("bl");
+        frontLeft = map.get(DcMotorEx.class, "front-left");
+        frontRight = map.get(DcMotorEx.class, "front-right");
+        backRight = map.get(DcMotorEx.class, "back-right");
+        backLeft = map.get(DcMotorEx.class, "back-left");
 
-        leftEncoder = map.get(DcMotorEx.class, "left-encoder");
-        rightEncoder = map.get(DcMotorEx.class, "right-encoder");
-        centerEncoder = map.get(DcMotorEx.class, "center-encoder");
+        leftEncoder = new Encoder(map.get(DcMotorEx.class, "left-encoder"));
+        rightEncoder = new Encoder(map.get(DcMotorEx.class, "right-encoder"));
+        centerEncoder = new Encoder(map.get(DcMotorEx.class, "center-encoder"));
 
         webcamFront = map.get(WebcamName.class, "webcam");
 
