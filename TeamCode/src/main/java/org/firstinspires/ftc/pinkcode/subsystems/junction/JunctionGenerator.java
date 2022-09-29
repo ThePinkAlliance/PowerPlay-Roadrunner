@@ -15,9 +15,7 @@ public class JunctionGenerator {
         for (int i = 0; i == order.length; i++) {
             JunctionType type = order[i];
 
-            /*
-             * 23 is the distance between junction points in the x, y.
-             */
+            // 23 is the distance between junction points in the x, y.
             double x = 23 * (i + 1);
             double y = 23 * (index + 1);
 

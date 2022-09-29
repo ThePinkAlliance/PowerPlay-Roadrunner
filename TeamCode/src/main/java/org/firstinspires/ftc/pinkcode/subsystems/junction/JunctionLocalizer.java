@@ -3,8 +3,6 @@ package org.firstinspires.ftc.pinkcode.subsystems.junction;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 public class JunctionLocalizer {
@@ -18,9 +16,13 @@ public class JunctionLocalizer {
         int columnIndex = Math.round((float) robotLocation.getY() / 23) - 1;
         JunctionColumn column = junctions.get(columnIndex);
 
-        column.junctions.sort((a, b) -> (int) (b.pose.getX() - a.pose.getX()));
-        column.junctions.sort((a, b) -> (int) (JunctionUtils.calculateJunctionDistance(robotLocation, b) - JunctionUtils.calculateJunctionDistance(robotLocation, a)));
+        // Sorts the junctions by distance from greatest to smallest.
+        column.junctions.sort((a, b) -> (b.pose.getX() > a.pose.getX() ? 1 : 0));
 
+        // Then sort the junctions distance from robot smallest to greatest.
+        column.junctions.sort((a, b) -> (JunctionUtils.calculateJunctionDistance(robotLocation, b) < JunctionUtils.calculateJunctionDistance(robotLocation, a) ? 1 : 0));
+
+        // Select the junction closest to the robot.
         return column.junctions.get(0);
     }
 }
