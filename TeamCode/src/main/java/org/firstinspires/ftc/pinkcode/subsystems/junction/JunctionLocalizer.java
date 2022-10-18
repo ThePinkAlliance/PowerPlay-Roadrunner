@@ -18,7 +18,7 @@ public class JunctionLocalizer {
         JunctionColumn column = junctions.get(columnIndex);
 
         // Sorts the junctions by distance from greatest to smallest.
-        column.junctions.sort((a, b) -> (b.pose.getX() > a.pose.getX() ? 1 : 0));
+        column.junctions.sort((a, b) -> (b.vector2d.getX() > a.vector2d.getX() ? 1 : 0));
 
         // Then sort the junctions distance from robot smallest to greatest.
         column.junctions.sort((a, b) -> (JunctionUtils.calculateJunctionDistance(robotLocation, b) < JunctionUtils.calculateJunctionDistance(robotLocation, a) ? 1 : 0));

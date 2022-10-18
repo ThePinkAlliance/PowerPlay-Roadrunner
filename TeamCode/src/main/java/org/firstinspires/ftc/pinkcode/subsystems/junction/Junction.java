@@ -1,13 +1,21 @@
 package org.firstinspires.ftc.pinkcode.subsystems.junction;
 
-import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.geometry.Vector2d;
 
 public class Junction {
-    Pose2d pose;
+    Vector2d vector2d;
     JunctionType type;
 
-    public Junction(Pose2d pose, JunctionType type) {
-        this.pose = pose;
+    public Junction(Vector2d pose, JunctionType type) {
+        this.vector2d = pose;
         this.type = type;
+    }
+
+    public JunctionType getType() {
+        return type;
+    }
+
+    public Vector2d getVector() {
+        return vector2d;
     }
 }

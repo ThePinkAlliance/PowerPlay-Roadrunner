@@ -138,6 +138,9 @@ android {
     ndkVersion '21.3.6528147'
 }
 
+//compileDebugJavaWithJavac
+
+
 repositories {
     flatDir {
         dirs rootProject.file('libs')
