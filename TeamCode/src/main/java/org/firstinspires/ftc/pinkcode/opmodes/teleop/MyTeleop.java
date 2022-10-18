@@ -17,8 +17,6 @@ public class MyTeleop extends OpMode {
 
     @Override
     public void loop() {
-
-
         motor.setPower(1);
     }
 }

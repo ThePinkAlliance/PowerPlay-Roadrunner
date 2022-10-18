@@ -27,7 +27,6 @@ public class TestTeleop extends PinkOpMode {
      */
     @Override
     public void loop() {
-
         /*
          * Passing the values from gamepad1's left y stick and right y stick into the drive method allowing for tank styled control.
          */

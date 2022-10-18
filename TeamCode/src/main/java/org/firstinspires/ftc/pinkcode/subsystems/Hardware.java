@@ -8,8 +8,6 @@ import org.firstinspires.ftc.pinkcode.util.Encoder;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 
 public class Hardware {
-    public DcMotor testMotor;
-    
     public DcMotorEx frontLeft;
     public DcMotorEx frontRight;
 

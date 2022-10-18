@@ -30,6 +30,8 @@ import org.firstinspires.ftc.pinkcode.subsystems.Hardware;
 import org.firstinspires.ftc.pinkcode.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.pinkcode.trajectorysequence.TrajectorySequenceBuilder;
 import org.firstinspires.ftc.pinkcode.trajectorysequence.TrajectorySequenceRunner;
+import org.firstinspires.ftc.pinkcode.util.AxisDirection;
+import org.firstinspires.ftc.pinkcode.util.BNO055IMUUtil;
 import org.firstinspires.ftc.pinkcode.util.LynxModuleUtil;
 
 import java.util.ArrayList;
@@ -43,6 +45,7 @@ import static org.firstinspires.ftc.pinkcode.subsystems.roadrunner.RobotConfig.M
 import static org.firstinspires.ftc.pinkcode.subsystems.roadrunner.RobotConfig.MOTOR_VELO_PID;
 import static org.firstinspires.ftc.pinkcode.subsystems.roadrunner.RobotConfig.RUN_USING_ENCODER;
 import static org.firstinspires.ftc.pinkcode.subsystems.roadrunner.RobotConfig.TRACK_WIDTH;
+import static org.firstinspires.ftc.pinkcode.subsystems.roadrunner.RobotConfig.WHEEL_BASE;
 import static org.firstinspires.ftc.pinkcode.subsystems.roadrunner.TrackingWheelLocalizer.encoderTicksToInches;
 
 /*
@@ -73,13 +76,13 @@ public class MecanumBase extends com.acmerobotics.roadrunner.drive.MecanumDrive 
     private VoltageSensor batteryVoltageSensor;
 
     public MecanumBase(HardwareMap hardwareMap, Hardware hardware) {
-        super(RobotConfig.kV, RobotConfig.kA, RobotConfig.kStatic, TRACK_WIDTH, TRACK_WIDTH, LATERAL_MULTIPLIER);
+        super(RobotConfig.kV, RobotConfig.kA, RobotConfig.kStatic, TRACK_WIDTH, WHEEL_BASE, LATERAL_MULTIPLIER);
 
         configureSubsystem(hardwareMap, hardware);
     }
 
     public MecanumBase(HardwareMap hardwareMap) {
-        super(RobotConfig.kV, RobotConfig.kA, RobotConfig.kStatic, TRACK_WIDTH, TRACK_WIDTH, LATERAL_MULTIPLIER);
+        super(RobotConfig.kV, RobotConfig.kA, RobotConfig.kStatic, TRACK_WIDTH, WHEEL_BASE, LATERAL_MULTIPLIER);
 
         configureSubsystem(hardwareMap, new Hardware(hardwareMap));
     }
@@ -122,7 +125,7 @@ public class MecanumBase extends com.acmerobotics.roadrunner.drive.MecanumDrive 
         // and the placement of the dot/orientation from https://docs.revrobotics.com/rev-control-system/control-system-overview/dimensions#imu-location
         //
         // For example, if +Y in this diagram faces downwards, you would use AxisDirection.NEG_Y.
-        // BNO055IMUUtil.remapZAxis(imu, AxisDirection.NEG_Y);
+        BNO055IMUUtil.remapZAxis(imu, AxisDirection.NEG_Z);
 
         motors = Arrays.asList(hardware.frontLeft, hardware.backLeft, hardware.backRight, hardware.frontRight);
 
@@ -146,6 +149,15 @@ public class MecanumBase extends com.acmerobotics.roadrunner.drive.MecanumDrive 
 
         // TODO: if desired, use setLocalizer() to change the localization method
         // for instance, setLocalizer(new ThreeTrackingWheelLocalizer(...));
+
+        // Configure the tracking localizer with the encoder pod positions in inches.
+        setLocalizer(new TrackingWheelLocalizer(hardware, Arrays.asList(
+                new Pose2d(),
+                new Pose2d(),
+
+                // These constants are from the CAD.
+                new Pose2d(5.62992, -4.01646377953)
+        )));
 
         trajectorySequenceRunner = new TrajectorySequenceRunner(follower, HEADING_PID);
     }
