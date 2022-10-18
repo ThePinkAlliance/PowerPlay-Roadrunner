@@ -9,5 +9,7 @@ public abstract class Subsystem {
         if (hardware == null) {
             throw new Error("hardware class is undefined, it's possible you instantiated this subsystem before the hardware class.");
         }
+
+        this.hardware = hardware;
     }
 }

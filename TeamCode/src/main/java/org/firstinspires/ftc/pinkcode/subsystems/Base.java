@@ -2,6 +2,10 @@ package org.firstinspires.ftc.pinkcode.subsystems;
 
 import org.firstinspires.ftc.pinkcode.lib.Subsystem;
 
+/**
+ * @deprecated Please use the mecanum base subsystem.
+ */
+@Deprecated
 public class Base extends Subsystem {
     public Base(Hardware hardware) {
         super(hardware);
