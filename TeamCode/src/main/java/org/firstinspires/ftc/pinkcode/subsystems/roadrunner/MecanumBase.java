@@ -24,7 +24,6 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType;
-import com.qualcomm.robotcore.robot.Robot;
 
 import org.firstinspires.ftc.pinkcode.subsystems.Hardware;
 import org.firstinspires.ftc.pinkcode.trajectorysequence.TrajectorySequence;
@@ -69,7 +68,7 @@ public class MecanumBase extends com.acmerobotics.roadrunner.drive.MecanumDrive 
 
     private TrajectoryFollower follower;
 
-    private DcMotorEx leftFront, leftRear, rightRear, rightFront;
+    private DcMotorEx frontLeft, backLeft, backRight, frontRight;
     private List<DcMotorEx> motors;
 
     private BNO055IMU imu;
@@ -126,6 +125,11 @@ public class MecanumBase extends com.acmerobotics.roadrunner.drive.MecanumDrive 
         //
         // For example, if +Y in this diagram faces downwards, you would use AxisDirection.NEG_Y.
         BNO055IMUUtil.remapZAxis(imu, AxisDirection.NEG_Z);
+
+        frontLeft = hardware.frontLeft;
+        backLeft = hardware.backLeft;
+        frontRight = hardware.frontRight;
+        backRight = hardware.backRight;
 
         motors = Arrays.asList(hardware.frontLeft, hardware.backLeft, hardware.backRight, hardware.frontRight);
 
@@ -300,10 +304,10 @@ public class MecanumBase extends com.acmerobotics.roadrunner.drive.MecanumDrive 
 
     @Override
     public void setMotorPowers(double v, double v1, double v2, double v3) {
-        leftFront.setPower(v);
-        leftRear.setPower(v1);
-        rightRear.setPower(v2);
-        rightFront.setPower(v3);
+        frontLeft.setPower(v);
+        backLeft.setPower(v1);
+        backRight.setPower(v2);
+        frontRight.setPower(v3);
     }
 
     @Override
