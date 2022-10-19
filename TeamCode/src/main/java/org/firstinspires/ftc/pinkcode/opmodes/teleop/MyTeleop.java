@@ -5,14 +5,21 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.pinkcode.subsystems.Elevator;
+import org.firstinspires.ftc.pinkcode.subsystems.Hardware;
+
 @TeleOp(name = "MyTeleop")
 public class MyTeleop extends OpMode {
     DcMotor motor;
     Servo servo;
 
+    Elevator elevator;
+
     @Override
     public void init() {
         motor = hardwareMap.dcMotor.get("motor");
+
+        elevator = new Elevator(new Hardware(hardwareMap));
     }
 
     @Override

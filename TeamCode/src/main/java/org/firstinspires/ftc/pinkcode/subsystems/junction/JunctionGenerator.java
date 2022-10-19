@@ -10,6 +10,8 @@ import java.util.Collections;
 import java.util.List;
 
 public class JunctionGenerator {
+    private static final double junctionDistance = 23.3;
+
     @NonNull
     public static List<Junction> generateList(int index, @NonNull JunctionType[] order) {
         ArrayList<Junction> junctions = new ArrayList<>();
@@ -18,8 +20,8 @@ public class JunctionGenerator {
             JunctionType type = order[i];
 
             // 23 is the distance between junction points in the x, y.
-            double x = 23 * (i + 1);
-            double y = 23 * (index + 1);
+            double x = junctionDistance * (i + 1);
+            double y = junctionDistance * (index + 1);
 
             junctions.add(new Junction(new Vector2d(x,y), type));
         }
