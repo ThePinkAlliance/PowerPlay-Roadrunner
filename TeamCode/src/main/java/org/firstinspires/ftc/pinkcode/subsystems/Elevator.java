@@ -12,8 +12,4 @@ public class Elevator extends Subsystem {
 
         frontRight = hardware.frontRight;
     }
-
-    public void doThing() {
-
-    }
 }

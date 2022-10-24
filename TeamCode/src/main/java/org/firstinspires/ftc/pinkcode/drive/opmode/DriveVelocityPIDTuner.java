@@ -49,7 +49,7 @@ import static org.firstinspires.ftc.pinkcode.subsystems.roadrunner.RobotConfig.R
  * Pressing B/O (Xbox/PS4) will cede control back to the tuning process.
  */
 @Config
-@Autonomous(group = "drive")
+@Autonomous(group = "drive, 72 inches")
 public class DriveVelocityPIDTuner extends LinearOpMode {
     public static double DISTANCE = 72; // in
 

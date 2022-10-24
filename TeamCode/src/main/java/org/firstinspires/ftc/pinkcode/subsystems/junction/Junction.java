@@ -11,6 +11,10 @@ public class Junction {
         this.type = type;
     }
 
+    public double getJunctionHeight() {
+        return this.type.height;
+    }
+
     public JunctionType getType() {
         return type;
     }

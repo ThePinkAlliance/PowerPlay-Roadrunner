@@ -17,13 +17,10 @@ public class MyTeleop extends OpMode {
 
     @Override
     public void init() {
-        motor = hardwareMap.dcMotor.get("motor");
-
         elevator = new Elevator(new Hardware(hardwareMap));
     }
 
     @Override
     public void loop() {
-        motor.setPower(1);
     }
 }

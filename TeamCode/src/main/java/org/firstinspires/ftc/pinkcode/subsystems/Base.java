@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.pinkcode.subsystems;
 
+import com.qualcomm.robotcore.hardware.DcMotor;
+
 import org.firstinspires.ftc.pinkcode.lib.Subsystem;
 
 /**
@@ -9,6 +11,11 @@ import org.firstinspires.ftc.pinkcode.lib.Subsystem;
 public class Base extends Subsystem {
     public Base(Hardware hardware) {
         super(hardware);
+
+        this.hardware.backLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        this.hardware.backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        this.hardware.frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        this.hardware.frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
     /**

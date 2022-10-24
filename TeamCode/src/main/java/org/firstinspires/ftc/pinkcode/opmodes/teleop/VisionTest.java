@@ -12,11 +12,11 @@ import java.util.List;
 
 @TeleOp(name = "Tensorflow Test")
 public class VisionTest extends PinkOpMode {
-    private static final String TFOD_MODEL_ASSET = "FreightFrenzy_BCDM.tflite";
+    private static final String TFOD_MODEL_ASSET = "PowerPlay_LCR_Quantized.tflite";
     private static final String[] LABELS = {
-            "Left",
-            "Center",
-            "Right"
+            "left",
+            "center",
+            "right"
     };
 
     private static final String VUFORIA_KEY =
@@ -77,12 +77,12 @@ public class VisionTest extends PinkOpMode {
                 "tfodMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         TFObjectDetector.Parameters tensorflowParameters = new TFObjectDetector.Parameters(tfodMonitorViewId);
 
-        tensorflowParameters.maxFrameRate = 24;
         tensorflowParameters.minResultConfidence = 0.82f;
         tensorflowParameters.isModelTensorFlow2 = true;
-        tensorflowParameters.isModelQuantized = false;
+        tensorflowParameters.isModelQuantized = true;
         tensorflowParameters.inputSize = 320;
         tensorflowParameters.numExecutorThreads = 3;
+        tensorflowParameters.numInterpreterThreads = 2;
 
         tensorflow = ClassFactory.getInstance().createTFObjectDetector(tensorflowParameters, vuforiaLocalizer);
         tensorflow.loadModelFromAsset(TFOD_MODEL_ASSET, LABELS);

@@ -11,7 +11,7 @@ public class RobotConfig {
     /*
      * These are motor constants that should be listed online for your motors.
      */
-    public static final double TICKS_PER_REV = 580.4;
+    public static final double TICKS_PER_REV = 580.4; // Calculated for gobuilda motors, change this once we get the REV Bore Encoders.
     public static final double MAX_RPM = 1150;
 
     /*
@@ -55,9 +55,23 @@ public class RobotConfig {
      * Runner is designed to enable faster autonomous motion, it is a good idea for testing to start
      * small and gradually increase them later after everything is working. All distance units are
      * inches.
+     *
+     * 227.4641120004: is max velocity in inches.
+     *
+     * TODO: Run the Max Velocity and Max Angular Velocity Tuners to find the real values for the constants MAX_VEL and MAX_ACCEL
      */
-    public static double MAX_VEL = (80 / 227.4641120004) * 100;
-    public static double MAX_ACCEL = (90 / 227.4641120004) * 100;
-    public static double MAX_ANG_VEL = Math.toRadians((80 / 227.4641120004) * 100);
-    public static double MAX_ANG_ACCEL = Math.toRadians((80 / 227.4641120004) * 100);
+    public static double MAX_VEL = calculateMaxVelocity(80);
+    public static double MAX_ACCEL = calculateMaxVelocity(90);
+    public static double MAX_ANG_VEL = Math.toRadians(MAX_VEL);
+    public static double MAX_ANG_ACCEL = Math.toRadians(MAX_ACCEL);
+
+    /**
+     * @deprecated This is a temporary method please run the velocity tuners to find the real values.
+     */
+    @Deprecated
+    public static double calculateMaxVelocity(double maxDemandPercentage) {
+        double limit = maxDemandPercentage / 100;
+
+        return ((MAX_RPM / 60) * (WHEEL_RADIUS * 2 * Math.PI) * limit);
+    }
 }
