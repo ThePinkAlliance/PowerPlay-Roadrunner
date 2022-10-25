@@ -1,8 +1,11 @@
 package org.firstinspires.ftc.pinkcode.subsystems;
 
+import com.qualcomm.hardware.broadcom.BroadcomColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DigitalChannelController;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.LED;
 
 import org.firstinspires.ftc.pinkcode.util.Encoder;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
@@ -25,6 +28,7 @@ public class Hardware {
     public DcMotorEx testMotor;
 
     public WebcamName webcamFront;
+
 
     public Hardware(HardwareMap map) {
         // Commented out all the devices to allow for easy tensorflow model testing.

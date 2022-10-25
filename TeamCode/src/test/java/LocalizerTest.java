@@ -36,7 +36,7 @@ public class LocalizerTest {
         Junction closestHighJunction = JunctionLocalizer.locateJunction(robotPose, JunctionType.HIGH);
 
         assertEquals(JunctionType.HIGH, closestHighJunction.getType());
-        assertEquals(69.9, closestHighJunction.getVector().getX(),0);
-        assertEquals(93.2, closestHighJunction.getVector().getY(), 0);
+        assertEquals(46.6, closestHighJunction.getVector().getX(),0);
+        assertEquals(69.9, closestHighJunction.getVector().getY(), 0);
     }
 }

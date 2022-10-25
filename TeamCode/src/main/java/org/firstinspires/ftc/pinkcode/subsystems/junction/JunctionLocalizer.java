@@ -5,7 +5,9 @@ import com.acmerobotics.roadrunner.geometry.Vector2d;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,16 +26,21 @@ public class JunctionLocalizer {
             return new Junction(new Vector2d(Double.NaN, Double.NaN), JunctionType.GROUND);
         }
 
-        JunctionColumn column = junctions.get(columnIndex);
+        JunctionColumn columnInline = junctions.get(columnIndex);
+        JunctionColumn columnFront = junctions.get(columnIndex+1);
+        JunctionColumn columnBack = junctions.get(columnIndex-1);
 
-        // Sorts the junctions by distance from greatest to smallest.
-        column.junctions.sort((a, b) -> (b.vector2d.getX() > a.vector2d.getX() ? 1 : 0));
+        ArrayList<Junction> combinedJunctions = new ArrayList<>();
+
+        combinedJunctions.addAll(columnBack.junctions);
+        combinedJunctions.addAll(columnFront.junctions);
+        combinedJunctions.addAll(columnInline.junctions);
 
         // Then sort the junctions distance from robot smallest to greatest.
-        column.junctions.sort((a, b) -> nextJunctionIsGreater(robotLocation, a, b));
+        combinedJunctions.sort((a,b) -> nextJunctionIsCloser(robotLocation, a, b));
 
         // Select the junction closest to the robot.
-        return column.junctions.get(0);
+        return combinedJunctions.get(0);
     }
 
     public static Junction locateJunction(Pose2d robotLocation, JunctionType type) {
@@ -43,16 +50,18 @@ public class JunctionLocalizer {
             return new Junction(new Vector2d(Double.NaN, Double.NaN), JunctionType.GROUND);
         }
 
-        JunctionColumn column = junctions.get(columnIndex);
+        JunctionColumn columnInline = junctions.get(columnIndex);
+        JunctionColumn columnFront = junctions.get(columnIndex+1);
+        JunctionColumn columnBack = junctions.get(columnIndex-1);
 
-        // Sorts the junctions by distance from greatest to smallest.
-        column.junctions.sort((a, b) -> (b.vector2d.getX() > a.vector2d.getX() ? 1 : 0));
+        ArrayList<Junction> combinedJunctions = new ArrayList<>();
 
-        // Then sort the junctions distance from robot smallest to greatest.
-        column.junctions.sort((a, b) -> nextJunctionIsGreater(robotLocation, a, b));
+        combinedJunctions.addAll(columnBack.junctions);
+        combinedJunctions.addAll(columnFront.junctions);
+        combinedJunctions.addAll(columnInline.junctions);
 
         // Creates a list of junctions filtered by type and sorted by distance from the robot
-        List<Junction> filteredJunctionList = column.junctions.stream().filter((e) -> e.type.equals(type)).sorted((a, b) -> nextJunctionIsGreater(robotLocation, a, b)).collect(Collectors.toList());
+        List<Junction> filteredJunctionList = combinedJunctions.stream().filter((e) -> e.type.equals(type)).sorted((a, b) -> nextJunctionIsCloser(robotLocation, a, b)).collect(Collectors.toList());
 
         // Select the junction closest to the robot.
         return filteredJunctionList.get(0);
@@ -74,7 +83,10 @@ public class JunctionLocalizer {
         return (theta - turretAngle);
     }
 
-    private static int nextJunctionIsGreater(Pose2d robotLocation, Junction a, Junction b) {
-        return (JunctionUtils.calculateJunctionDistance(robotLocation, b) < JunctionUtils.calculateJunctionDistance(robotLocation, a) ? 1 : 0);
+    private static int nextJunctionIsCloser(Pose2d robotLocation, Junction a, Junction b) {
+        double d2 = JunctionUtils.calculateJunctionDistance(robotLocation, b);
+        double d1 = JunctionUtils.calculateJunctionDistance(robotLocation, a);
+
+        return (d1 > d2 ? 1 : -1);
     }
 }
