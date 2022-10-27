@@ -2,6 +2,7 @@ package org.firstinspires.ftc.pinkcode.opmodes.teleop;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.pinkcode.subsystems.Hardware;
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
@@ -10,9 +11,9 @@ import org.firstinspires.ftc.pinkcode.lib.PinkOpMode;
 
 import java.util.List;
 
-@TeleOp(name = "Tensorflow Test")
+@TeleOp(name = "Tensorflow Test, [EXPERIMENTAL]")
 public class VisionTest extends PinkOpMode {
-    private static final String TFOD_MODEL_ASSET = "PowerPlay_LCR_Quantized.tflite";
+    private static final String TFOD_MODEL_ASSET = "PowerPlay_LCR.tflite";
     private static final String[] LABELS = {
             "left",
             "center",
@@ -27,6 +28,8 @@ public class VisionTest extends PinkOpMode {
 
     @Override
     public void init() {
+        this.hardware = new Hardware(hardwareMap);
+
         configureVision();
 
         if (tensorflow != null) {
@@ -51,14 +54,14 @@ public class VisionTest extends PinkOpMode {
             if (updatedRecognitions != null) {
                 telemetry.addData("# Object Detected", updatedRecognitions.size());
                 // step through the list of recognitions and display boundary info.
-                int i = 0;
-                for (Recognition recognition : updatedRecognitions) {
+                for (int i = 0; i < updatedRecognitions.size(); i++) {
+                    Recognition recognition = updatedRecognitions.get(i);
+
                     telemetry.addData(String.format("label (%d)", i), recognition.getLabel());
                     telemetry.addData(String.format("  left,top (%d)", i), "%.03f , %.03f",
                             recognition.getLeft(), recognition.getTop());
                     telemetry.addData(String.format("  right,bottom (%d)", i), "%.03f , %.03f",
                             recognition.getRight(), recognition.getBottom());
-                    i++;
                 }
                 telemetry.update();
             }
@@ -79,10 +82,7 @@ public class VisionTest extends PinkOpMode {
 
         tensorflowParameters.minResultConfidence = 0.82f;
         tensorflowParameters.isModelTensorFlow2 = true;
-        tensorflowParameters.isModelQuantized = true;
-        tensorflowParameters.inputSize = 320;
-        tensorflowParameters.numExecutorThreads = 3;
-        tensorflowParameters.numInterpreterThreads = 2;
+//        tensorflowParameters.isModelQuantized = false;
 
         tensorflow = ClassFactory.getInstance().createTFObjectDetector(tensorflowParameters, vuforiaLocalizer);
         tensorflow.loadModelFromAsset(TFOD_MODEL_ASSET, LABELS);

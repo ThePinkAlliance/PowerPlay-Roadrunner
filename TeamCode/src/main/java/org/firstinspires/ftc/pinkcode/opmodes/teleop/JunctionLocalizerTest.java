@@ -10,7 +10,7 @@ import org.firstinspires.ftc.pinkcode.subsystems.junction.JunctionLocalizer;
 import org.firstinspires.ftc.pinkcode.subsystems.junction.JunctionType;
 import org.firstinspires.ftc.pinkcode.subsystems.junction.JunctionUtils;
 
-@TeleOp(name = "Junction Localizer Test")
+@TeleOp(name = "Junction Localizer Test, [EXPERIMENTAL]")
 public class JunctionLocalizerTest extends OpMode {
     @Override
     public void init() {

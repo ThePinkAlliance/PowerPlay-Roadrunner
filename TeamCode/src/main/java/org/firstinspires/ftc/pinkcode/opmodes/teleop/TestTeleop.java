@@ -19,6 +19,7 @@ public class TestTeleop extends PinkOpMode {
      */
     @Override
     public void init() {
+        initializeHardware(hardwareMap);
         base = new Base(hardware);
     }
 

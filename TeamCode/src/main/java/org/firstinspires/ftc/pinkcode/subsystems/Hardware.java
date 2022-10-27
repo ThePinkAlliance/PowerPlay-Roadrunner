@@ -43,6 +43,6 @@ public class Hardware {
 //        rightEncoder = new Encoder(map.get(DcMotorEx.class, "right-encoder"));
 //        centerEncoder = new Encoder(map.get(DcMotorEx.class, "center-encoder"));
 
-        webcamFront = map.get(WebcamName.class, "webcam");
+        webcamFront = map.get(WebcamName.class, "Webcam 1");
     }
 }
