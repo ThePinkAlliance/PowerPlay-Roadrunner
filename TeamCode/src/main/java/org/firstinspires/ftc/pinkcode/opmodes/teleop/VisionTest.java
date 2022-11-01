@@ -13,7 +13,7 @@ import java.util.List;
 
 @TeleOp(name = "Tensorflow Test, [EXPERIMENTAL]")
 public class VisionTest extends PinkOpMode {
-    private static final String TFOD_MODEL_ASSET = "PowerPlay_LCR.tflite";
+    private static final String TFOD_MODEL_ASSET = "PowerPlay_LCR_Quantized_Experimental.tflite";
     private static final String[] LABELS = {
             "left",
             "center",
@@ -41,7 +41,7 @@ public class VisionTest extends PinkOpMode {
             // to artificially zoom in to the center of image.  For best results, the "aspectRatio" argument
             // should be set to the value of the images used to create the TensorFlow Object Detection model
             // (typically 16/9).
-            tensorflow.setZoom(2.5, 16.0/9.0);
+//            tensorflow.setZoom(2.5, 16.0/9.0);
         }
     }
 
@@ -80,9 +80,9 @@ public class VisionTest extends PinkOpMode {
                 "tfodMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         TFObjectDetector.Parameters tensorflowParameters = new TFObjectDetector.Parameters(tfodMonitorViewId);
 
-        tensorflowParameters.minResultConfidence = 0.82f;
+        tensorflowParameters.minResultConfidence = 0.32f;
         tensorflowParameters.isModelTensorFlow2 = true;
-//        tensorflowParameters.isModelQuantized = false;
+        tensorflowParameters.isModelQuantized = true;
 
         tensorflow = ClassFactory.getInstance().createTFObjectDetector(tensorflowParameters, vuforiaLocalizer);
         tensorflow.loadModelFromAsset(TFOD_MODEL_ASSET, LABELS);

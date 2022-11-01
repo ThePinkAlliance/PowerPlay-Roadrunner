@@ -16,9 +16,10 @@ import org.firstinspires.ftc.pinkcode.subsystems.junction.JunctionLocalizer;
 public class NavigateTurretPrototype extends PinkOpMode {
     private final Pose2d robotLocation = new Pose2d(45, 100);
 
-    private final double TICKS_PER_ROT = 580.4;
+    // The sum of PPR (Pulses Per Revolution) * 4 is ticks per rotation.
+    private final double TICKS_PER_ROT = 1538;
 
-    private final float gearRatio = 30 / 120f;
+    private final float gearRatio = 27 / 3f;
     private final double degreesPerRotation = (360 / (1 / gearRatio));
 
     public PIDFCoefficients pidfCoefficients = new PIDFCoefficients(0, 0, 0, 0);
