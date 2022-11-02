@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DigitalChannelController;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.LED;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.pinkcode.util.Encoder;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
@@ -29,6 +30,9 @@ public class Hardware {
 
     public WebcamName webcamFront;
 
+    public Servo claw;
+    public DcMotor barMover;
+
 
     public Hardware(HardwareMap map) {
         // Commented out all the devices to allow for easy tensorflow model testing.
@@ -44,5 +48,7 @@ public class Hardware {
 //        centerEncoder = new Encoder(map.get(DcMotorEx.class, "center-encoder"));
 
         webcamFront = map.get(WebcamName.class, "Webcam 1");
+        claw = map.get(Servo.class, "claw");
+        barMover = map.get(DcMotor.class, "barMover");
     }
 }
