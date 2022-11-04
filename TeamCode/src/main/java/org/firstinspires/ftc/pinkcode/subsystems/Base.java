@@ -38,10 +38,10 @@ public class Base extends Subsystem {
         double rightX = rot;
 
         // Equations below is motor speed for each wheel
-        double v1 = r * Math.cos(robotAngle) + rightX;
-        double v2 = r * Math.sin(robotAngle) + rightX;
-        double v3 = r * Math.sin(robotAngle) - rightX;
-        double v4 = r * Math.cos(robotAngle) - rightX;
+        double v1 = r * Math.cos(robotAngle) - rightX;
+        double v2 = r * Math.sin(robotAngle) - rightX;
+        double v3 = r * Math.sin(robotAngle) + rightX;
+        double v4 = r * Math.cos(robotAngle) + rightX;
 
         // If not turning give each wheel full power
         if (x == 0) {

@@ -12,7 +12,7 @@ import org.firstinspires.ftc.pinkcode.subsystems.junction.Junction;
 import org.firstinspires.ftc.pinkcode.subsystems.junction.JunctionLocalizer;
 
 /**
- * This Operational mode is a prototype of control of the turret,
+ * This Operational mode is a prototype of automatic turret control,
  * this opmode is intended to be self contained e.g not using devices from the hardware class this allows for easy testing.
  */
 @TeleOp(name = "Turret Navigate Prototype, [EXPERIMENTAL]")

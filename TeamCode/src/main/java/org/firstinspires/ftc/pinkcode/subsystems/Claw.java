@@ -15,8 +15,11 @@ public class Claw extends Subsystem {
         claw = hardware.claw;
         barMover = hardware.barMover;
     }
+    public void moveBar(double power) {
+        barMover.setPower(power);
+    }
 
-    public void move(double position) {
+    public void moveClaw(double position) {
         claw.setPosition(position);
     }
 }

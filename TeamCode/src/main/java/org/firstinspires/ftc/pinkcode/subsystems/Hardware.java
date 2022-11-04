@@ -36,10 +36,10 @@ public class Hardware {
 
     public Hardware(HardwareMap map) {
         // Commented out all the devices to allow for easy tensorflow model testing.
-//        frontLeft = map.get(DcMotorEx.class, "front-left");
-//        frontRight = map.get(DcMotorEx.class, "front-right");
-//        backRight = map.get(DcMotorEx.class, "back-right");
-//        backLeft = map.get(DcMotorEx.class, "back-left");
+        frontLeft = map.get(DcMotorEx.class, "front-left");
+        frontRight = map.get(DcMotorEx.class, "front-right");
+        backRight = map.get(DcMotorEx.class, "back-right");
+        backLeft = map.get(DcMotorEx.class, "back-left");
 
 //        testMotor = map.get(DcMotorEx.class, "test-motor");
 //
@@ -47,8 +47,8 @@ public class Hardware {
 //        rightEncoder = new Encoder(map.get(DcMotorEx.class, "right-encoder"));
 //        centerEncoder = new Encoder(map.get(DcMotorEx.class, "center-encoder"));
 
-        webcamFront = map.get(WebcamName.class, "Webcam 1");
-        claw = map.get(Servo.class, "claw");
-        barMover = map.get(DcMotor.class, "barMover");
+//        webcamFront = map.get(WebcamName.class, "Webcam 1");
+//        claw = map.get(Servo.class, "claw");
+//        barMover = map.get(DcMotor.class, "barMover");
     }
 }
