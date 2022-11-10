@@ -7,7 +7,11 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 
+import org.firstinspires.ftc.pinkcode.lib.CommandResponse;
+import org.firstinspires.ftc.pinkcode.lib.PinkLinearOpMode;
 import org.firstinspires.ftc.pinkcode.lib.PinkOpMode;
+import org.firstinspires.ftc.pinkcode.subsystems.Elevator;
+import org.firstinspires.ftc.pinkcode.subsystems.Turret;
 import org.firstinspires.ftc.pinkcode.subsystems.junction.Junction;
 import org.firstinspires.ftc.pinkcode.subsystems.junction.JunctionLocalizer;
 
@@ -20,40 +24,26 @@ import org.firstinspires.ftc.pinkcode.subsystems.junction.JunctionLocalizer;
 public class NavigateTurretPrototype extends PinkOpMode {
     private final Pose2d robotLocation = new Pose2d(45, 100);
 
-    // The sum of PPR (Pulses Per Revolution) * 4 is ticks per rotation.
-    private final double TICKS_PER_ROT = 1538;
-
-    private final float gearRatio = 27 / 3f;
-    private final double degreesPerRotation = (360 / (1 / gearRatio));
-
-    public PIDFCoefficients pidfCoefficients = new PIDFCoefficients(0, 0, 0, 0);
-
-    DcMotorEx turretMotor;
+    Turret turret;
+    Elevator elevator;
 
     @Override
     public void init() {
         initializeHardware(hardwareMap);
 
-        this.turretMotor = hardwareMap.get(DcMotorEx.class, "turret-motor");
+        this.elevator = new Elevator(hardware);
+        this.turret = new Turret(hardware, elevator);
 
-        this.turretMotor.setPIDFCoefficients(DcMotor.RunMode.RUN_TO_POSITION, pidfCoefficients);
     }
 
     @Override
     public void loop() {
         Junction closestJunction = JunctionLocalizer.locateJunction(robotLocation);
-        double targetAngle = JunctionLocalizer.getAdjustedTurretAngle(closestJunction, robotLocation, getTurretAngle());
+        double targetAngle = JunctionLocalizer.getAdjustedTurretAngle(closestJunction, robotLocation, turret.getTurretAngle());
 
-        setTurretAngle(targetAngle);
-    }
+        CommandResponse response = turret.setTurretAngle(targetAngle);
 
-    public void setTurretAngle(double targetAngle) {
-        double targetPosition = (targetAngle / degreesPerRotation) * TICKS_PER_ROT;
-
-        this.turretMotor.setTargetPosition((int) targetPosition);
-    }
-
-    public double getTurretAngle() {
-        return degreesPerRotation * ((turretMotor.getCurrentPosition() / TICKS_PER_ROT) * gearRatio);
+        telemetry.addData("Rotate Command Status", response.toString());
+        telemetry.update();
     }
 }

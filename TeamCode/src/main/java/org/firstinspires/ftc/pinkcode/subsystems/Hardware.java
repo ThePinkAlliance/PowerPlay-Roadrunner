@@ -1,11 +1,8 @@
 package org.firstinspires.ftc.pinkcode.subsystems;
 
-import com.qualcomm.hardware.broadcom.BroadcomColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.DigitalChannelController;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.LED;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.pinkcode.util.Encoder;
@@ -21,6 +18,9 @@ public class Hardware {
 
     public DcMotorEx backLeft;
     public DcMotorEx backRight;
+
+    public DcMotorEx turretMotor;
+    public DcMotorEx liftMotor;
 
     public Encoder leftEncoder;
     public Encoder rightEncoder;
@@ -40,6 +40,9 @@ public class Hardware {
         frontRight = map.get(DcMotorEx.class, "front-right");
         backRight = map.get(DcMotorEx.class, "back-right");
         backLeft = map.get(DcMotorEx.class, "back-left");
+
+//        turretMotor = map.get(DcMotorEx.class, "turret-motor");
+//        liftMotor = map.get(DcMotorEx.class, "lift-motor");
 
 //        testMotor = map.get(DcMotorEx.class, "test-motor");
 //

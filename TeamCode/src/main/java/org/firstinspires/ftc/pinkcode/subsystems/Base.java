@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.pinkcode.subsystems;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import org.firstinspires.ftc.pinkcode.lib.Subsystem;
 
@@ -16,6 +17,9 @@ public class Base extends Subsystem {
         this.hardware.backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         this.hardware.frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         this.hardware.frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        this.hardware.frontRight.setDirection(DcMotorSimple.Direction.REVERSE);
+        this.hardware.backRight.setDirection(DcMotorSimple.Direction.REVERSE);
     }
 
     /**
@@ -38,10 +42,10 @@ public class Base extends Subsystem {
         double rightX = rot;
 
         // Equations below is motor speed for each wheel
-        double v1 = r * Math.cos(robotAngle) - rightX;
-        double v2 = r * Math.sin(robotAngle) - rightX;
-        double v3 = r * Math.sin(robotAngle) + rightX;
-        double v4 = r * Math.cos(robotAngle) + rightX;
+        double v1 = r * Math.cos(robotAngle) + rightX;
+        double v2 = r * Math.sin(robotAngle) + rightX;
+        double v3 = r * Math.sin(robotAngle) - rightX;
+        double v4 = r * Math.cos(robotAngle) - rightX;
 
         // If not turning give each wheel full power
         if (x == 0) {
