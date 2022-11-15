@@ -33,7 +33,6 @@ public class NavigateTurretPrototype extends PinkOpMode {
 
         this.elevator = new Elevator(hardware);
         this.turret = new Turret(hardware, elevator);
-
     }
 
     @Override

@@ -8,6 +8,7 @@ import org.firstinspires.ftc.pinkcode.lib.Subsystem;
 import org.firstinspires.ftc.pinkcode.subsystems.roadrunner.RobotConfig;
 
 public class Elevator extends Subsystem {
+    // Unit Inches
     private double currentElevatorHeight = 0;
 
     private final double clawHeightDifference = 0;

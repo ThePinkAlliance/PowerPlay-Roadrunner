@@ -1,5 +1,10 @@
 package org.firstinspires.ftc.pinkcode.subsystems;
 
+import com.acmerobotics.roadrunner.profile.AccelerationConstraint;
+import com.acmerobotics.roadrunner.profile.MotionProfile;
+import com.acmerobotics.roadrunner.profile.MotionProfileGenerator;
+import com.acmerobotics.roadrunner.profile.MotionState;
+import com.acmerobotics.roadrunner.profile.VelocityConstraint;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 
@@ -29,6 +34,16 @@ public class Turret extends Subsystem {
 
         if (elevator.hasClearedMinimumRotateHeight()) {
             this.hardware.turretMotor.setTargetPosition((int) targetPosition);
+
+            return CommandResponse.ACCEPTED;
+        }
+
+        return CommandResponse.REJECTED;
+    }
+
+    public CommandResponse setTurretPower(double power) {
+        if (elevator.hasClearedMinimumRotateHeight()) {
+            this.hardware.turretMotor.setPower(power);
 
             return CommandResponse.ACCEPTED;
         }
