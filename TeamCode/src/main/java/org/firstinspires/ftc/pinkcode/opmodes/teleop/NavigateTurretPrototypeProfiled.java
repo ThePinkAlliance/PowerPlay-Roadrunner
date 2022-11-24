@@ -10,7 +10,7 @@ import com.acmerobotics.roadrunner.profile.MotionState;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.pinkcode.lib.CommandResponse;
+import org.firstinspires.ftc.pinkcode.lib.CommandStatus;
 import org.firstinspires.ftc.pinkcode.lib.PinkOpMode;
 import org.firstinspires.ftc.pinkcode.subsystems.Lift;
 import org.firstinspires.ftc.pinkcode.subsystems.Turret;
@@ -78,7 +78,7 @@ public class NavigateTurretPrototypeProfiled extends PinkOpMode {
         controller.setTargetPosition(state.getX());
 
         double scaledPower = (controller.getTargetPosition() - controller.update(currentAngle)) / controller.getTargetPosition();
-        CommandResponse response = turret.setTurretPower(scaledPower);
+        CommandStatus response = turret.setTurretPower(scaledPower);
 
         telemetry.addData("Rotate Command Status", response.toString());
         telemetry.update();

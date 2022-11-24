@@ -4,7 +4,7 @@ import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.pinkcode.lib.CommandResponse;
+import org.firstinspires.ftc.pinkcode.lib.CommandStatus;
 import org.firstinspires.ftc.pinkcode.lib.PinkOpMode;
 import org.firstinspires.ftc.pinkcode.subsystems.Lift;
 import org.firstinspires.ftc.pinkcode.subsystems.Turret;
@@ -36,7 +36,7 @@ public class NavigateTurretPrototype extends PinkOpMode {
         Junction closestJunction = JunctionLocalizer.locateJunction(robotLocation);
         double targetAngle = JunctionLocalizer.getAdjustedTurretAngle(closestJunction, robotLocation, turret.getTurretAngle());
 
-        CommandResponse response = turret.setTurretAngle(targetAngle);
+        CommandStatus response = turret.setTurretAngle(targetAngle).getStatus();
 
         telemetry.addData("Rotate Command Status", response.toString());
         telemetry.update();

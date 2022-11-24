@@ -1,17 +1,21 @@
 package org.firstinspires.ftc.pinkcode.lib;
 
-public enum CommandResponse {
-    ACCEPTED("ACCEPTED"),
-    REJECTED("REJECTED");
+import com.qualcomm.robotcore.hardware.DcMotor;
 
-    String text;
+public class CommandResponse {
+    private CommandStatus status;
+    private DcMotor motor;
 
-    CommandResponse(String text) {
-        this.text = text;
+    public CommandResponse(DcMotor motor, CommandStatus status) {
+        this.motor = motor;
+        this.status = status;
     }
 
-    @Override
-    public String toString() {
-        return this.text;
+    public CommandStatus getStatus() {
+        return status;
+    }
+
+    public boolean isBusy() {
+        return motor.isBusy();
     }
 }

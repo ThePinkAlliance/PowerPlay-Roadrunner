@@ -43,6 +43,9 @@ public class Lift extends Subsystem {
         double position = Range.clip(rotations * RobotConfig.TICKS_PER_REV, 0, maxElevatorHeightTicks);
 
         this.hardware.liftMotor.setTargetPosition((int) position);
+
+        // limit the set target position speed to 40%
+        this.hardware.liftMotor.setPower(0.4);
         this.currentElevatorHeight = height + clawHeightDifference;
     }
 

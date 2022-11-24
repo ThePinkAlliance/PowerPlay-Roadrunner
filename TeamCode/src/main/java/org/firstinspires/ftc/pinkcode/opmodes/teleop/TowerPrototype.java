@@ -9,7 +9,7 @@ import com.acmerobotics.roadrunner.profile.MotionState;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.pinkcode.lib.CommandResponse;
+import org.firstinspires.ftc.pinkcode.lib.CommandStatus;
 import org.firstinspires.ftc.pinkcode.lib.PinkOpMode;
 import org.firstinspires.ftc.pinkcode.subsystems.Lift;
 import org.firstinspires.ftc.pinkcode.subsystems.Turret;
@@ -84,7 +84,7 @@ public class TowerPrototype extends PinkOpMode {
 
         // Allow the turret to move if x button is pressed and the lift is at a safe height.
         if (lift.hasClearedMinimumRotateHeight() && gamepad1.x) {
-            CommandResponse response = turret.setTurretPower(scaledPower);
+            CommandStatus response = turret.setTurretPower(scaledPower);
 
             telemetry.addData("Rotate Command Status", response.toString());
             telemetry.addData("Turret Power", scaledPower);

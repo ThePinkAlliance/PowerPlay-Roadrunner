@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 
 import org.firstinspires.ftc.pinkcode.lib.CommandResponse;
+import org.firstinspires.ftc.pinkcode.lib.CommandStatus;
 import org.firstinspires.ftc.pinkcode.lib.Subsystem;
 
 public class Turret extends Subsystem {
@@ -30,20 +31,20 @@ public class Turret extends Subsystem {
         if (lift.hasClearedMinimumRotateHeight()) {
             this.hardware.turretMotor.setTargetPosition((int) targetPosition);
 
-            return CommandResponse.ACCEPTED;
+            return new CommandResponse(this.hardware.turretMotor, CommandStatus.ACCEPTED);
         }
 
-        return CommandResponse.REJECTED;
+        return new CommandResponse(this.hardware.turretMotor, CommandStatus.ACCEPTED);
     }
 
-    public CommandResponse setTurretPower(double power) {
+    public CommandStatus setTurretPower(double power) {
         if (lift.hasClearedMinimumRotateHeight()) {
             this.hardware.turretMotor.setPower(power);
 
-            return CommandResponse.ACCEPTED;
+            return CommandStatus.ACCEPTED;
         }
 
-        return CommandResponse.REJECTED;
+        return CommandStatus.REJECTED;
     }
 
     public double getTurretAngle() {
