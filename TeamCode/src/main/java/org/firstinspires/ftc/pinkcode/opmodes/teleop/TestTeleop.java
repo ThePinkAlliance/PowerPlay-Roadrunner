@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.pinkcode.opmodes.teleop;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.pinkcode.lib.PinkOpMode;
 import org.firstinspires.ftc.pinkcode.subsystems.Base;
@@ -28,10 +29,16 @@ public class TestTeleop extends PinkOpMode {
      */
     @Override
     public void loop() {
+        double range = 0.6;
+
+        double x = Range.clip(-gamepad1.left_stick_x, -range, range);
+        double y = Range.clip(gamepad1.left_stick_y, -range, range);
+        double rot = Range.clip(gamepad1.right_stick_x, -range, range);
+
         /*
          * Passing the values from gamepad1's left y stick and right y stick into the drive method allowing for tank styled control.
          */
-        base.mecanumDrive(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x);
+        base.mecanumDrive(x, y, rot);
     }
 
     @Override

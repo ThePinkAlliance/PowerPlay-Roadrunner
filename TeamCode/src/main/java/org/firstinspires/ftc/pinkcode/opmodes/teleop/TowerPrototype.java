@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.pinkcode.opmodes.teleop;
 
-import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.control.PIDCoefficients;
 import com.acmerobotics.roadrunner.control.PIDFController;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
@@ -16,15 +15,15 @@ import org.firstinspires.ftc.pinkcode.subsystems.Lift;
 import org.firstinspires.ftc.pinkcode.subsystems.Turret;
 import org.firstinspires.ftc.pinkcode.subsystems.junction.Junction;
 import org.firstinspires.ftc.pinkcode.subsystems.junction.JunctionLocalizer;
+import org.firstinspires.ftc.pinkcode.subsystems.junction.JunctionUtils;
+import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 
-/**
- * This Operational mode is a prototype of automatic turret control,
- * this opmode is intended to be self contained e.g not using devices from the hardware class this allows for easy testing.
- */
-@TeleOp(name = "Turret Navigate Prototype Profiled, [EXPERIMENTAL]")
-@Config
-public class NavigateTurretPrototypeProfiled extends PinkOpMode {
+@TeleOp(name = "Tower Prototype, [EXPERIMENTAL]")
+public class TowerPrototype extends PinkOpMode {
     private final Pose2d robotLocation = new Pose2d(45, 100);
+
+    // The distance from the center of the robot to the center of the claw, Unit: Inches.
+    double robotCenterToClawCenterDistance = 10;
 
     Turret turret;
     Lift lift;
@@ -40,6 +39,7 @@ public class NavigateTurretPrototypeProfiled extends PinkOpMode {
 
     private final Junction closestJunction = JunctionLocalizer.locateJunction(robotLocation);
     private final double targetAngle = JunctionLocalizer.getAdjustedTurretAngle(closestJunction, robotLocation, turret.getTurretAngle());
+
     private ElapsedTime profileTimer;
     private MotionProfile motionProfile;
     private boolean timerReset;
@@ -78,9 +78,37 @@ public class NavigateTurretPrototypeProfiled extends PinkOpMode {
         controller.setTargetPosition(state.getX());
 
         double scaledPower = (controller.getTargetPosition() - controller.update(currentAngle)) / controller.getTargetPosition();
-        CommandResponse response = turret.setTurretPower(scaledPower);
 
-        telemetry.addData("Rotate Command Status", response.toString());
+        // Allow the turret to move if x button is pressed and the lift is at a safe height.
+        if (lift.hasClearedMinimumRotateHeight() && gamepad1.x) {
+            CommandResponse response = turret.setTurretPower(scaledPower);
+
+            telemetry.addData("Rotate Command Status", response.toString());
+            telemetry.addData("Turret Power", scaledPower);
+        } else {
+            turret.setTurretAngle(0);
+        }
+
+        // Command the lift to move a little above the nearest junction.
+        if (gamepad1.b) {
+            lift.setLiftHeight(closestJunction.getJunctionHeight() + 2);
+        } else {
+            lift.stopLift();
+        }
+
+        // Set the extension bar target distance to the distance between the robot and the target junction.
+        if (gamepad1.a) {
+            double distance = JunctionUtils.calculateJunctionDistance(robotLocation, closestJunction) - robotCenterToClawCenterDistance;
+
+            lift.setExtensionDistance(distance);
+
+            telemetry.addData("Extension Bar Distance", distance);
+            telemetry.addData("Extension Position", this.hardware.extensionMotor.getCurrentPosition());
+            telemetry.addData("Extension Current [amps]", this.hardware.extensionMotor.getCurrent(CurrentUnit.AMPS));
+        } else {
+            lift.stopExtensionMotor();
+        }
+
         telemetry.update();
     }
 

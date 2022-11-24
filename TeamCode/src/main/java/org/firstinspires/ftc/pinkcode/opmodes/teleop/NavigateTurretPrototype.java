@@ -3,14 +3,10 @@ package org.firstinspires.ftc.pinkcode.opmodes.teleop;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 
 import org.firstinspires.ftc.pinkcode.lib.CommandResponse;
-import org.firstinspires.ftc.pinkcode.lib.PinkLinearOpMode;
 import org.firstinspires.ftc.pinkcode.lib.PinkOpMode;
-import org.firstinspires.ftc.pinkcode.subsystems.Elevator;
+import org.firstinspires.ftc.pinkcode.subsystems.Lift;
 import org.firstinspires.ftc.pinkcode.subsystems.Turret;
 import org.firstinspires.ftc.pinkcode.subsystems.junction.Junction;
 import org.firstinspires.ftc.pinkcode.subsystems.junction.JunctionLocalizer;
@@ -25,14 +21,14 @@ public class NavigateTurretPrototype extends PinkOpMode {
     private final Pose2d robotLocation = new Pose2d(45, 100);
 
     Turret turret;
-    Elevator elevator;
+    Lift lift;
 
     @Override
     public void init() {
         initializeHardware(hardwareMap);
 
-        this.elevator = new Elevator(hardware);
-        this.turret = new Turret(hardware, elevator);
+        this.lift = new Lift(hardware);
+        this.turret = new Turret(hardware, lift);
     }
 
     @Override

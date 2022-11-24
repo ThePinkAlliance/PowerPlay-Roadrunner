@@ -1,10 +1,5 @@
 package org.firstinspires.ftc.pinkcode.subsystems;
 
-import com.acmerobotics.roadrunner.profile.AccelerationConstraint;
-import com.acmerobotics.roadrunner.profile.MotionProfile;
-import com.acmerobotics.roadrunner.profile.MotionProfileGenerator;
-import com.acmerobotics.roadrunner.profile.MotionState;
-import com.acmerobotics.roadrunner.profile.VelocityConstraint;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 
@@ -19,12 +14,12 @@ public class Turret extends Subsystem {
     private final double degreesPerRotation = (360 / (1 / gearRatio));
 
     public PIDFCoefficients pidfCoefficients = new PIDFCoefficients();
-    public Elevator elevator;
+    public Lift lift;
 
-    public Turret(Hardware hardware, Elevator elevator) {
+    public Turret(Hardware hardware, Lift lift) {
         super(hardware);
 
-        this.elevator = elevator;
+        this.lift = lift;
 
         this.hardware.turretMotor.setPIDFCoefficients(DcMotor.RunMode.RUN_TO_POSITION, pidfCoefficients);
     }
@@ -32,7 +27,7 @@ public class Turret extends Subsystem {
     public CommandResponse setTurretAngle(double targetAngle) {
         double targetPosition = (targetAngle / degreesPerRotation) * TICKS_PER_ROT;
 
-        if (elevator.hasClearedMinimumRotateHeight()) {
+        if (lift.hasClearedMinimumRotateHeight()) {
             this.hardware.turretMotor.setTargetPosition((int) targetPosition);
 
             return CommandResponse.ACCEPTED;
@@ -42,7 +37,7 @@ public class Turret extends Subsystem {
     }
 
     public CommandResponse setTurretPower(double power) {
-        if (elevator.hasClearedMinimumRotateHeight()) {
+        if (lift.hasClearedMinimumRotateHeight()) {
             this.hardware.turretMotor.setPower(power);
 
             return CommandResponse.ACCEPTED;

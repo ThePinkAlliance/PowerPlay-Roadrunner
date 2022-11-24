@@ -13,26 +13,28 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
  * This class should never configure IO by itself that should be left for subsystems/opmodes to deal with.
  */
 public class Hardware {
+    // Drivetrain
     public DcMotorEx frontLeft;
     public DcMotorEx frontRight;
-
     public DcMotorEx backLeft;
     public DcMotorEx backRight;
 
+    // Turret
     public DcMotorEx turretMotor;
-    public DcMotorEx liftMotor;
 
+    // Odometry
     public Encoder leftEncoder;
     public Encoder rightEncoder;
     public Encoder centerEncoder;
 
     public DcMotorEx testMotor;
 
-    public WebcamName webcamFront;
-
+    // Lift
+    public DcMotorEx extensionMotor;
+    public DcMotorEx liftMotor;
     public Servo claw;
-    public DcMotor barMover;
 
+    public WebcamName webcamFront;
 
     public Hardware(HardwareMap map) {
         // Commented out all the devices to allow for easy tensorflow model testing.

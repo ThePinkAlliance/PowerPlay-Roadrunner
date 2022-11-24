@@ -7,9 +7,14 @@ import com.qualcomm.robotcore.util.Range;
 import org.firstinspires.ftc.pinkcode.lib.Subsystem;
 import org.firstinspires.ftc.pinkcode.subsystems.roadrunner.RobotConfig;
 
-public class Elevator extends Subsystem {
+public class Lift extends Subsystem {
     // Unit Inches
     private double currentElevatorHeight = 0;
+
+    private final double extensionMaxTicks = 100;
+    private final double extensionMaxInches = 100;
+    private final double extensionInchesPerElevatorRotation = extensionMaxInches / (extensionMaxTicks / RobotConfig.TICKS_PER_REV);
+    private double currentExtensionDistance = 0;
 
     private final double clawHeightDifference = 0;
     private final double maxElevatorHeightTicks = 100;
@@ -18,23 +23,43 @@ public class Elevator extends Subsystem {
     private final double safeRotationHeightInches = 8;
 
     PIDFCoefficients pidCoefficients = new PIDFCoefficients();
+    PIDFCoefficients extensionPidCoefficients = new PIDFCoefficients();
 
-    public Elevator(Hardware hardware) {
+    public Lift(Hardware hardware) {
         super(hardware);
 
         this.hardware.liftMotor.setPIDFCoefficients(DcMotor.RunMode.RUN_TO_POSITION, pidCoefficients);
         this.hardware.liftMotor.setTargetPositionTolerance(2);
+
+        this.hardware.extensionMotor.setPIDFCoefficients(DcMotor.RunMode.RUN_TO_POSITION, extensionPidCoefficients);
+        this.hardware.extensionMotor.setTargetPositionTolerance(2);
     }
 
     /**
-     * Commands the elevator to move to a specific height with the height of the claw in mind.
+     * Commands the lift to move to a specific height with the height of the claw in mind.
      */
-    public void setElevatorHeight(double height) {
+    public void setLiftHeight(double height) {
         double rotations = (height + clawHeightDifference) / inchesPerElevatorRotation;
         double position = Range.clip(rotations * RobotConfig.TICKS_PER_REV, 0, maxElevatorHeightTicks);
 
         this.hardware.liftMotor.setTargetPosition((int) position);
         this.currentElevatorHeight = height + clawHeightDifference;
+    }
+
+    public void stopLift() {
+        this.hardware.liftMotor.setPower(0);
+    }
+
+    public void setExtensionDistance(double distance) {
+        double rotations = distance / inchesPerElevatorRotation;
+        int position = (int) Range.clip(rotations * RobotConfig.TICKS_PER_REV, 0, maxElevatorHeightTicks);
+
+        this.hardware.extensionMotor.setTargetPosition(position);
+        this.currentExtensionDistance = distance;
+    }
+
+    public void stopExtensionMotor() {
+        this.hardware.extensionMotor.setPower(0);
     }
 
     /**
