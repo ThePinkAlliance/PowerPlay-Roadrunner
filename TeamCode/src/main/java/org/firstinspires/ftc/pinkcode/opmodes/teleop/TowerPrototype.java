@@ -38,6 +38,8 @@ public class TowerPrototype extends PinkOpMode {
     public static PIDFController controller = new PIDFController(coefficients);
 
     private final Junction closestJunction = JunctionLocalizer.locateJunction(robotLocation);
+
+    // This will need to be moved to loop if we want the angle to update in real time.
     private final double targetAngle = JunctionLocalizer.getAdjustedTurretAngle(closestJunction, robotLocation, turret.getTurretAngle());
 
     private ElapsedTime profileTimer;
@@ -51,12 +53,13 @@ public class TowerPrototype extends PinkOpMode {
         this.lift = new Lift(hardware);
         this.turret = new Turret(hardware, lift);
 
+        // These values are random. we need to find the real motion limits for the robot.
         this.velocityConstraint = 25;
         this.accelerationConstraint = 40;
         this.jerkConstraint = 80;
         this.previousMotionState = new MotionState(0,0);
 
-        // Might be worth investigating using the output provided by update for improved control system latency.
+        // if target angle is moved into loop this needs to follow it.
         motionProfile = generateMotionProfile(new MotionState(targetAngle, 0));
 
         profileTimer = new ElapsedTime(ElapsedTime.Resolution.SECONDS);
@@ -92,6 +95,12 @@ public class TowerPrototype extends PinkOpMode {
         // Command the lift to move a little above the nearest junction.
         if (gamepad1.b) {
             lift.setLiftHeight(closestJunction.getJunctionHeight() + 2);
+
+            telemetry.addData("Lift Power", this.hardware.liftMotor.getCurrent(CurrentUnit.AMPS));
+            telemetry.addData("Lift Position", this.hardware.liftMotor.getCurrentPosition());
+            telemetry.addData("Lift Target Position", this.hardware.liftMotor.getTargetPosition());
+            telemetry.addData("Lift Over Current", this.hardware.liftMotor.isOverCurrent());
+            telemetry.addData("Lift Velocity", this.hardware.liftMotor.getVelocity());
         } else {
             lift.stopLift();
         }
