@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.ejml.simple.SimpleMatrix;
 import org.firstinspires.ftc.pinkcode.lib.PinkOpMode;
 
-@TeleOp(name = "Tower Inverse Kinematics, [EXPERIMENTAL]")
+@TeleOp(name = "Tower Inverse Kinematics, [EXPERIMENTAL]", group = "EXPERIMENTAL")
 public class TowerKinematics extends PinkOpMode {
     int numRows = 2;
     int numCols = 2;

@@ -61,6 +61,12 @@ public class Lift extends Subsystem {
         this.currentExtensionDistance = distance;
     }
 
+    public void setExtensionPower(double power) {
+        double processed_input = Range.clip(power, -0.3, 0.3);
+
+        this.hardware.extensionMotor.setPower(processed_input);
+    }
+
     public void stopExtensionMotor() {
         this.hardware.extensionMotor.setPower(0);
     }
@@ -77,6 +83,13 @@ public class Lift extends Subsystem {
      */
     public boolean hasClearedMinimumRotateHeight() {
         return getClawHeight() > safeRotationHeightInches;
+    }
+
+    /**
+     * Move the lift to the minimum height that is safe for the turret to rotate.
+     */
+    public void goToSafeHeight() {
+        this.setLiftHeight(safeRotationHeightInches);
     }
 
     /**

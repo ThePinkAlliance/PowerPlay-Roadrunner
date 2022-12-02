@@ -7,16 +7,18 @@ import org.firstinspires.ftc.pinkcode.lib.Subsystem;
 
 public class Claw extends Subsystem {
     Servo claw;
-    DcMotor barMover;
+    DcMotor extensionMotor;
 
     // TODO: Make a method for the barMover.
     public Claw(Hardware hardware) {
         super(hardware);
+
         claw = hardware.claw;
-        barMover = hardware.barMover;
+        extensionMotor = hardware.extensionMotor;
     }
+
     public void moveBar(double power) {
-        barMover.setPower(power);
+        extensionMotor.setPower(power);
     }
 
     public void moveClaw(double position) {

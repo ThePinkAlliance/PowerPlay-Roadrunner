@@ -11,9 +11,9 @@ import org.firstinspires.ftc.pinkcode.lib.PinkOpMode;
 
 import java.util.List;
 
-@TeleOp(name = "Tensorflow Test, [EXPERIMENTAL]")
+@TeleOp(name = "Tensorflow Test, [EXPERIMENTAL]", group = "EXPERIMENTAL")
 public class VisionTest extends PinkOpMode {
-    private static final String TFOD_MODEL_ASSET = "PowerPlay_LCR_Quantized_Experimental.tflite";
+    private static final String TFOD_MODEL_ASSET = "PowerPlay_LCR_Experimental.tflite";
     private static final String[] LABELS = {
             "left",
             "center",

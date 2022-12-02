@@ -52,7 +52,7 @@ public class Hardware {
 //        rightEncoder = new Encoder(map.get(DcMotorEx.class, "right-encoder"));
 //        centerEncoder = new Encoder(map.get(DcMotorEx.class, "center-encoder"));
 
-//        webcamFront = map.get(WebcamName.class, "Webcam 1");
+        webcamFront = map.get(WebcamName.class, "Webcam 1");
 //        claw = map.get(Servo.class, "claw");
 //        barMover = map.get(DcMotor.class, "barMover");
     }

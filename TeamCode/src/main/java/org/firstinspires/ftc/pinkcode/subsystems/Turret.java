@@ -47,6 +47,10 @@ public class Turret extends Subsystem {
         return CommandStatus.REJECTED;
     }
 
+    public double getPosition() {
+        return this.hardware.turretMotor.getCurrentPosition();
+    }
+
     public double getTurretAngle() {
         return degreesPerRotation * ((this.hardware.turretMotor.getCurrentPosition() / TICKS_PER_ROT) * gearRatio);
     }

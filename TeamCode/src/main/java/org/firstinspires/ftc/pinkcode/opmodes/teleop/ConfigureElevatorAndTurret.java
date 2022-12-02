@@ -15,7 +15,7 @@ import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.pinkcode.lib.PinkOpMode;
 
-@TeleOp(name = "Configure Elevator & Turret, [EXPERIMENTAL]")
+@TeleOp(name = "Configure Elevator & Turret, [EXPERIMENTAL]", group = "EXPERIMENTAL")
 @Config
 public class ConfigureElevatorAndTurret extends PinkOpMode {
     public static boolean enablePid = false;

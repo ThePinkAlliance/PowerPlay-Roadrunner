@@ -15,7 +15,7 @@ import org.firstinspires.ftc.pinkcode.subsystems.junction.JunctionLocalizer;
  * This Operational mode is a prototype of automatic turret control,
  * this opmode is intended to be self contained e.g not using devices from the hardware class this allows for easy testing.
  */
-@TeleOp(name = "Turret Navigate Prototype, [EXPERIMENTAL]")
+@TeleOp(name = "Turret Navigate Prototype, [EXPERIMENTAL]", group = "EXPERIMENTAL")
 @Config
 public class NavigateTurretPrototype extends PinkOpMode {
     private final Pose2d robotLocation = new Pose2d(45, 100);

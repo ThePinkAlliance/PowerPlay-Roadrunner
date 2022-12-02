@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.pinkcode.lib.PinkOpMode;
 import org.firstinspires.ftc.pinkcode.subsystems.Claw;
 
-@TeleOp(name = "ClawTeleop")
+@TeleOp(name = "ClawTeleop", group = "EXPERIMENTAL")
 public class ClawTeleop extends PinkOpMode {
     Claw claw;
 

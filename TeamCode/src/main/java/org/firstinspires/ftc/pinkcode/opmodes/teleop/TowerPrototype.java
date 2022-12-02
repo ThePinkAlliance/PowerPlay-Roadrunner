@@ -18,7 +18,7 @@ import org.firstinspires.ftc.pinkcode.subsystems.junction.JunctionLocalizer;
 import org.firstinspires.ftc.pinkcode.subsystems.junction.JunctionUtils;
 import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 
-@TeleOp(name = "Tower Prototype, [EXPERIMENTAL]")
+@TeleOp(name = "Tower Prototype, [EXPERIMENTAL]", group = "EXPERIMENTAL")
 public class TowerPrototype extends PinkOpMode {
     private final Pose2d robotLocation = new Pose2d(45, 100);
 
